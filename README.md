@@ -15,6 +15,9 @@ accessible or Not
 `http://web.mta.info/accessibility/stations.htm`
 `https://data.ny.gov/Transportation/NYC-Transit-Subway-Entrance-And-Exit-Data/i9wp-a4ja`
 
+* Baruch College
+
+
 * Github Example
 file:///C:/Users/Mariano/Documents/GitHub/subway_examples/nyc-subway-entrances-map/index.html
 
