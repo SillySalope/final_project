@@ -7,13 +7,19 @@ L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/
 	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
 }).addTo(map);;
 
-const LookupLine = function(LineColor) {
-  switch(LineColor) {
+const LookupLine = function(route) {
+  switch(route) {
   case '1':
     return {
       color: "#d11141",
       description: '1'
     }
+  default:
+    return {
+    color: "#d11141",
+    description: 'default'
+  }
+
   }
 }
 //   case '02':
@@ -94,18 +100,62 @@ const LookupLine = function(LineColor) {
 //     }
 //   }).addTo(map);
 //
+// Data is point based, not polygons, it is different...
+
+// var geojsonMarkerOptions = {
+//     radius: 8,
+//     fillColor: LookupLine(feature.properties.Route_1).color,
+//     color: "#fff",
+//     weight: 1,
+//     opacity: 1,
+//     fillOpacity: 0.8
+// };
+
+//Adapting Rigel's code
+// $.getJSON('data/BARUCH/subway_entrance_feb2018b.geojson', function(feature) {
+
+$.getJSON('data/BARUCH/subway_4326.geojson', function(subways) {
+    L.geoJSON(subways, {
+        style: function(feature) {
+            return {
+              color: 'white',
+              fillColor: LookupLine(feature.properties.Route_1).color,
+                        fillColor: 'red',
+              fillOpacity: 0.8,
+              weight: 10,
+            }
+        }
+        }).addTo(map)
+})
+
+  // $.getJSON('data/BARUCH/subway_4326.geojson', function(subways) {
+  //     L.geoJSON(subways, {
+  //         style: function(feature) {
+  //             return {
+  //               color: 'white',
+  //               fillColor: LookupLine(feature.properties.Route_1).color,
+  //                         fillColor: 'red',
+  //               fillOpacity: 0.8,
+  //               weight: 10,
+  //             })
+  //         },
+  //         onEachFeature: function(feature,layer) {
+  //                   layer.bindPopup("This station is accesible:" + "feature.properties.ADA")
+  //               }
+  //             }
+  //         }).addTo(map)
 //   // Use L.geoJSON to load PLUTO parcel data that we clipped in QGIS and change the CRS from 2263 to 4326
 //   // this was moved inside the getJSON callback so that the parcels will load on top of the study area study_boundary
-  var blocksGeojson = L.geoJSON(entrances, {
-      style: function(feature) {
-
-          return {
-            color: 'white',
-            fillColor: LookupLine(feature.properties.Route_1).color,
-            fillOpacity: 0.8,
-            weight: 10,
-          }
-      },
+  // var blocksGeojson = L.geoJSON(entrances, {
+  //     style: function(feature) {
+  //
+  //         return {
+  //           color: 'white',
+  //           fillColor: LookupLine(feature.properties.Route_1).color,
+  //           fillOpacity: 1,
+  //           weight: 10,
+  //         }
+  //     },
 //     onEachFeature: function(feature, layer) {
 //       const description = LookupLine(feature.properties.Line).description;
 //
@@ -131,5 +181,5 @@ const LookupLine = function(LineColor) {
 //         blocksGeojson.resetStyle(e.target);
 //       });
 //     }
-  }).addTo(map);
+  // }).addTo(map);
 // })
