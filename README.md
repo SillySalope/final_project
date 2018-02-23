@@ -49,4 +49,10 @@ or, adding the raw `.geojson` file to the project and using jquery `$.getJSON()`
 I then added data-driven styling to it by passing an options object to L.geoJSON()
 
 ## Progress
-So I dowloaded the dataset with the info and the updated entrances shapefile
+The cooordinate system was wrong. Now it's fixed.
+
+## TO FIX
+1 - Color of the markers, function
+2 - Shape of the markers
+3 - That bloody banner
+4 - The popup message

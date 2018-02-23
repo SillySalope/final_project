@@ -7,21 +7,33 @@ L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/
 	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
 }).addTo(map);;
 
-const LookupLine = function(route) {
-  switch(route) {
-  case '1':
-    return {
-      color: "#d11141",
-      description: '1'
-    }
-  default:
-    return {
-    color: "#d11141",
-    description: 'default'
-  }
-
-  }
+function LookupLine(Route_1) { //You can use this for categories too!
+	console.log(Route_1)
+	return Route_1 === '1' ? '#800026' :
+			Route_1 === '2'  ? '#BD0026' :
+			Route_1 ===  'A' ? '#E31A1C' :
+			Route_1 ===  'C' ? '#FC4E2A' :
+			Route_1 ===  'N' ? '#FD8D3C' :
+			Route_1 ===  'Q' ? '#FEB24C' :
+			Route_1 ===  'Z' ? '#FED976' :
+						'#FFEDA0';
 }
+//
+// var LookupLine = function(route) {
+//   switch(route) {
+//   case '1':
+//     return {
+//       color: "#d11141",
+//       description: '1'
+//     }
+//   default:
+//     return {
+//     color: "#d11141",
+//     description: 'default'
+//   }
+//
+//   }
+// }
 //   case '02':
 //     return {
 //       color: "#f7d496",
@@ -114,20 +126,29 @@ const LookupLine = function(route) {
 //Adapting Rigel's code
 // $.getJSON('data/BARUCH/subway_entrance_feb2018b.geojson', function(feature) {
 
+// $.getJSON('data/BARUCH/subway_4326.geojson', function(subways) {
+//     L.geoJSON(subways, {
+//         style: function(feature) {
+//             return {
+//               color: 'white',
+//               fillColor: LookupLine(feature.properties.Route_1).color,
+//               fillOpacity: 0.8,
+//               weight: 10,
+//             }
+//         }
+//         }).addTo(map)
+// })
+
+
 $.getJSON('data/BARUCH/subway_4326.geojson', function(subways) {
     L.geoJSON(subways, {
-        style: function(feature) {
-            return {
-              color: 'white',
-              fillColor: LookupLine(feature.properties.Route_1).color,
-                        fillColor: 'red',
-              fillOpacity: 0.8,
-              weight: 10,
-            }
-        }
-        }).addTo(map)
+			pointToLayer: function (feature,latlng) {
+				return L.circleMarker (latlng, {
+					color: LookupLine(feature.properties.Route_1)
+				}).bindPopup("hello" + feature.properties.ADA)
+			}
+    }).addTo(map)
 })
-
   // $.getJSON('data/BARUCH/subway_4326.geojson', function(subways) {
   //     L.geoJSON(subways, {
   //         style: function(feature) {
