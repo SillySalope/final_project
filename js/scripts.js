@@ -38,8 +38,8 @@ L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/
 //signaling accesible stations
 function Accesibility(ADA) { //You can use this for categories too!
 	console.log(ADA)
-	return ADA === 'Accesible' ? '#008000' :
-				ADA === 'Not accesible'  ? '#BD0026' :
+	return ADA === 'Accessible' ? '#008000' :
+				ADA === 'Not accessible'  ? '#BD0026' :
 						'#000000';
 }
 
